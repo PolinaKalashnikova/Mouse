@@ -45,7 +45,7 @@ public class GraphicsDisplay extends JPanel {
     private Double[] chosenPoint = null;
 
     public GraphicsDisplay() {
-       // addMouseMotionListener(new TMouseMotionListener());
+        addMouseMotionListener(new TMouseMotionListener());
         // Цвет заднего фона области отображения - белый
         setBackground(Color.WHITE);
         // Сконструировать необходимые объекты, используемые в рисовании
@@ -376,6 +376,31 @@ public class GraphicsDisplay extends JPanel {
         return dest;
     }
 
+    private class TMouseMotionListener implements MouseMotionListener {
 
+        @Override
+        public void mouseDragged(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            setCursor(defaultCursor);
+            chosenPoint = null;
+            int mouseX = e.getX();
+            int mouseY = e.getY();
+            if (graphicsData != null) {
+                for (Double[] data : graphicsData) {
+                    Point2D.Double point = xyToPoint(data[0], data[1]);
+                    if (Math.abs(mouseX - point.getX()) <= 5 && Math.abs(mouseY - point.getY()) <= 5) {
+                        chosenPoint = data;
+                        setCursor(pointCursor);
+                        break;
+                    }
+                }
+            }
+            repaint();
+        }
+    }
 }
 
