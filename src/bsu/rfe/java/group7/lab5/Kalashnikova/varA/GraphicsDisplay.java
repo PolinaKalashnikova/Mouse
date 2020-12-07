@@ -236,14 +236,9 @@ public class GraphicsDisplay extends JPanel {
 
     }
 
-    protected boolean isSumLessThanTen(Double[] point) {
+    protected boolean isPosledovatelno (Double[] point) {
         int valueFuncInt = point[1].intValue();
-        int sum = 0;
-        while (valueFuncInt > 0) {
-            sum += valueFuncInt % 10;
-            valueFuncInt /= 10;
-        }
-        return sum < 10 ? true : false;
+        return (valueFuncInt % 2 == 0)? true : false;
     }
 
     // Отображение маркеров точек, по которым рисовался график
@@ -257,7 +252,7 @@ public class GraphicsDisplay extends JPanel {
 
         // Шаг 2 - Организовать цикл по всем точкам графика
         for (Double[] point : graphicsData) {
-            if (isSumLessThanTen(point)) {
+            if (isPosledovatelno(point)) {
                 Point2D.Double center = xyToPoint(point[0], point[1]);
                 GeneralPath path = new GeneralPath();
                 path.moveTo(center.x - 6, center.y + 6);
